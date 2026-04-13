@@ -1,7 +1,6 @@
 
 ---
 
-```markdown
 # 🚀 CleanCropper
 
 ### ⚡ Turn annotated datasets into clean, ML-ready image crops in seconds.
@@ -14,16 +13,16 @@
 
 Working with computer vision datasets is messy:
 
-- Labels are hard to visualize  
-- Objects are trapped inside full images  
-- Dataset cleaning takes hours of scripting  
-- No simple tool exists for instant object cropping from annotations  
+* Labels are hard to visualize
+* Objects are trapped inside full images
+* Dataset cleaning takes hours of scripting
+* No simple tool exists for **instant object cropping from annotations**
 
 ---
 
 # ✨ The Solution
 
-CleanCropper automates the entire dataset cropping pipeline.
+**CleanCropper automates the entire dataset cropping pipeline.**
 
 Drop your dataset → run one script → get clean object-level images ready for ML training.
 
@@ -31,23 +30,25 @@ Drop your dataset → run one script → get clean object-level images ready for
 
 # ⚙️ What CleanCropper Does
 
-1. 🧹 Clean workspace  
-   Removes old extracted data to avoid conflicts  
+CleanCropper follows a simple but powerful pipeline:
 
-2. 📦 Extract dataset  
-   Unzips your dataset automatically  
+1. 🧹 **Clean workspace**
+   Removes old extracted data to avoid conflicts
 
-3. 📍 Locate files  
-   Detects `images/` and `labels/` folders  
+2. 📦 **Extract dataset**
+   Unzips your dataset automatically
 
-4. ✂️ Crop objects  
-   Converts polygon annotations → bounding boxes → cropped images  
+3. 📍 **Locate files**
+   Detects `images/` and `labels/` folders
 
-5. 🧠 Remove duplicates  
-   Uses MD5 hashing to avoid repeated crops  
+4. ✂️ **Crop objects**
+   Converts polygon annotations → bounding boxes → cropped images
 
-6. 💾 Export dataset  
-   Saves structured, timestamped output folders  
+5. 🧠 **Remove duplicates**
+   Uses MD5 hashing to avoid repeated crops
+
+6. 💾 **Export dataset**
+   Saves structured, timestamped output folders
 
 ---
 
@@ -56,10 +57,8 @@ Drop your dataset → run one script → get clean object-level images ready for
 Your dataset should be a `.zip` file structured like this:
 
 ```
-
-images/   → .jpg, .png files
-labels/   → annotation .txt files
-
+images/  → .jpg, .png files
+labels/  → annotation .txt files
 ```
 
 ---
@@ -69,22 +68,18 @@ labels/   → annotation .txt files
 Each line represents one object:
 
 ```
-
 <class_id> x1 y1 x2 y2 x3 y3 ...
-
 ```
 
 ### Example:
 
 ```
-
 0  0.12 0.34  0.45 0.34  0.45 0.78  0.12 0.78
 1  0.50 0.10  0.80 0.10  0.80 0.50  0.50 0.50
+```
 
-````
-
-- Coordinates are normalized (0 → 1)  
-- Relative to image width & height  
+* Coordinates are normalized (0 → 1)
+* Relative to image width & height
 
 ---
 
@@ -92,21 +87,23 @@ Each line represents one object:
 
 ```bash
 python cleancropper.py
-````
+```
 
-✔ Shows progress
+That’s it.
+
+✔ Script shows progress
 ✔ Confirms before processing
-✔ Generates output automatically
+✔ Outputs final dataset automatically
 
 ---
 
 # 📁 Output Structure
 
-Every run creates a timestamped folder:
+Every run generates a fresh timestamped folder:
 
 ```
 cropped_clean/
-  crops_YYYYMMDD_HHMMSS/
+  crops_20260101_153000/
     image_class0_obj1.jpg
     image_class1_obj2.jpg
 ```
@@ -138,28 +135,32 @@ After execution, CleanCropper displays:
 
 # ⚠️ Common Issues
 
-## ❌ Zip file not found
+### ❌ Zip file not found
 
-Ensure:
+Check:
 
 ```
 ZIP_FILE path is correct
 ```
 
-## ❌ Missing folders
+---
 
-ZIP must contain:
+### ❌ Missing folders
+
+Ensure:
 
 ```
-images/ and labels/
+images/ and labels/ exist inside ZIP
 ```
 
-## ❌ No crops generated
+---
 
-Check:
+### ❌ No crops generated
 
-* image-label filename match
-* correct annotation format
+Possible reasons:
+
+* filename mismatch between image & label
+* incorrect annotation format
 
 ---
 
@@ -178,11 +179,11 @@ CleanCropper/
 
 # 🎯 Use Cases
 
-* Computer vision dataset preprocessing
-* Object detection → classification dataset conversion
-* Dataset cleaning pipelines
-* ML model training preparation
-* Kaggle / research dataset setup
+* 🧠 Computer vision dataset preprocessing
+* 🏷 Object detection → classification dataset conversion
+* 🧹 Dataset cleaning pipelines
+* ⚡ Fast ML prototyping
+* 📦 Kaggle / research dataset preparation
 
 ---
 
@@ -194,6 +195,6 @@ CleanCropper/
 
 # 🧠 One-Line Summary
 
-CleanCropper turns messy annotated datasets into clean, structured, ML-ready object crops — with zero manual effort.
+> CleanCropper turns messy annotated datasets into clean, structured, ML-ready object crops — with zero manual effort.
 
-
+---
