@@ -196,7 +196,4 @@ CleanCropper/
 
 CleanCropper turns messy annotated datasets into clean, structured, ML-ready object crops — with zero manual effort.
 
-```
-
----
 
