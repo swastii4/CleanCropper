@@ -1,195 +1,91 @@
-# CleanCropper
-
-**Automated Image Crop Extractor from Annotated Datasets**
-
-**Version:** 1.0
-**Requirements:** Python 3.8+, Pillow
-
----
-
-## 📌 What is CleanCropper?
-
-CleanCropper is a Python utility designed for computer vision and machine learning workflows.
-It processes a zipped dataset of annotated images, extracts individual objects based on polygon labels, and saves each object as a separate cropped image.
-
-It helps you:
-
-* Isolate labeled objects quickly
-* Avoid duplicate crops
-* Prepare datasets efficiently for training ML models
-
----
-
-## ⚙️ How It Works
-
-Each run follows this pipeline:
-
-| Step           | Description                                             |
-| -------------- | ------------------------------------------------------- |
-| 1. Clean       | Deletes old `extracted_data/` to avoid leftover files   |
-| 2. Extract     | Unzips the dataset into a fresh folder                  |
-| 3. Locate      | Finds `images/` and `labels/` directories               |
-| 4. Crop        | Converts polygon labels → bounding boxes → crops images |
-| 5. Deduplicate | Uses MD5 hashing to skip identical crops                |
-| 6. Save        | Stores crops in a timestamped output folder             |
-
----
-
-## 🧰 Requirements
-
-Install dependencies:
-
-```bash
-pip install Pillow
-```
-
-* Python 3.8 or higher
-* No additional external libraries required
-
----
-
-## 📥 Input Format
-
-Your ZIP file must contain:
-
-* `images/` (or `image/`) → image files (`.jpg`, `.png`, etc.)
-* `labels/` (or `label/`) → annotation files (`.txt`)
-
-### 📄 Label Format (YOLO Polygon Style)
-
+🚀 CleanCropper
+⚡ Turn annotated datasets into clean, ML-ready image crops in seconds.
+A lightweight Python utility that extracts individual objects from annotated images (YOLO-style polygons) and converts them into structured training datasets.
+🧠 The Problem
+Working with computer vision datasets is messy:
+Labels are hard to visualize
+Objects are trapped inside full images
+Dataset cleaning takes hours of scripting
+No simple tool exists for instant object cropping from annotations
+✨ The Solution
+CleanCropper automates the entire dataset cropping pipeline.
+Drop your dataset → run one script → get clean object-level images ready for ML training.
+⚙️ What CleanCropper Does
+CleanCropper follows a simple but powerful pipeline:
+🧹 Clean workspace
+Removes old extracted data to avoid conflicts
+📦 Extract dataset
+Unzips your dataset automatically
+📍 Locate files
+Detects images/ and labels/ folders
+✂️ Crop objects
+Converts polygon annotations → bounding boxes → cropped images
+🧠 Remove duplicates
+Uses MD5 hashing to avoid repeated crops
+💾 Export dataset
+Saves structured, timestamped output folders
+📥 Input Format
+Your dataset should be a .zip file structured like this:
+images/  → .jpg, .png files
+labels/  → annotation .txt files
+📄 Annotation Format (YOLO Polygon Style)
 Each line represents one object:
-
-```
-<class_id>  <x1> <y1>  <x2> <y2>  <x3> <y3> ...
-```
-
-### Example:
-
-```
+<class_id> x1 y1 x2 y2 x3 y3 ...
+Example:
 0  0.12 0.34  0.45 0.34  0.45 0.78  0.12 0.78
 1  0.50 0.10  0.80 0.10  0.80 0.50  0.50 0.50
-```
-
-* Coordinates are normalized (0 → 1)
-* Relative to image width & height
-
----
-
-## ⚙️ Configuration
-
-Edit these lines in the script:
-
-```python
-ZIP_FILE = "inputfile.zip"
-OUTPUT_FOLDER = "cropped_clean"
-```
-
----
-
-## 📁 Output Structure
-
-Each run creates a timestamped folder:
-
-```
+Coordinates are normalized (0 → 1)
+Relative to image width & height
+▶️ How to Run
+python cleancropper.py
+That’s it.
+✔ Script shows progress
+✔ Confirms before processing
+✔ Outputs final dataset automatically
+📁 Output Structure
+Every run generates a fresh timestamped folder:
 cropped_clean/
-  crops_YYYYMMDD_HHMMSS/
+  crops_20260101_153000/
     image_class0_obj1.jpg
     image_class1_obj2.jpg
-```
-
-### Naming Pattern:
-
-```
-<original_name>_class<class_id>_obj<object_number>.jpg
-```
-
----
-
-## ▶️ Running the Script
-
-```bash
-python cleancropper.py
-```
-
-* The script prints progress
-* Pauses once for confirmation before cropping
-
----
-
-## 📊 Output Summary
-
-After execution, the script displays:
-
-* Total crops saved
-* Duplicate crops skipped
-* Output folder location
-
----
-
-## 🚀 Key Features
-
-| Feature             | Description                                    |
-| ------------------- | ---------------------------------------------- |
-| Fresh Start         | Cleans previous extracted data automatically   |
-| Polygon Support     | Converts polygon annotations to bounding boxes |
-| Duplicate Detection | Uses MD5 hashing to skip identical crops       |
-| Timestamped Output  | Prevents overwriting previous runs             |
-| Boundary Safety     | Ensures crops stay within image limits         |
-| Error Handling      | Continues processing even if one image fails   |
-
----
-
-## ⚠️ Common Errors & Fixes
-
-### ❌ Zip file not found
-
-* Ensure correct path in `ZIP_FILE`
-* Script prints expected path for debugging
-
-### ❌ Missing folders
-
-* ZIP must contain `images/` and `labels/`
-
-### ❌ No crops saved
-
-* Check:
-
-  * Matching filenames between images and labels
-  * Proper YOLO polygon format
-
----
-
-## 📂 Project Structure
-
-```
+🧰 Features
+Feature	Description
+🧹 Fresh Start	Auto-cleans previous runs
+🧩 Polygon Support	Handles YOLO-style polygons
+🧠 Smart Deduplication	Removes duplicate crops (MD5 hash)
+🕒 Timestamped Output	No file overwrites
+🛡 Boundary Safety	Keeps crops within image limits
+⚡ Fault Tolerant	Continues even if one file fails
+📊 Output Summary
+After execution, CleanCropper displays:
+Total crops generated
+Duplicate crops skipped
+Output directory path
+⚠️ Common Issues
+❌ Zip file not found
+Check:
+ZIP_FILE path is correct
+❌ Missing folders
+Ensure:
+images/ and labels/ exist inside ZIP
+❌ No crops generated
+Possible reasons:
+filename mismatch between image & label
+incorrect annotation format
+📂 Project Structure
 CleanCropper/
 │
 ├── cleancropper.py        # Main script
-├── inputfile.zip          # Input dataset
-├── extracted_data/        # Temporary extracted files
-└── cropped_clean/         # Output folder
-    └── crops_timestamp/
-```
-
----
-
-## 💡 Use Cases
-
-* Object detection dataset preparation
-* Annotation processing pipelines
-* ML model training preprocessing
-* Data cleaning and augmentation
-
----
-
-## 👩‍💻 Author
-
+├── inputfile.zip          # Dataset input
+├── extracted_data/        # Temporary workspace
+└── cropped_clean/         # Output dataset
+🎯 Use Cases
+🧠 Computer vision dataset preprocessing
+🏷 Object detection → classification dataset conversion
+🧹 Dataset cleaning pipelines
+⚡ Fast ML prototyping
+📦 Kaggle / research dataset preparation
+👩‍💻 Author
 Swastika Khamaru
-
----
-
-## 🧠 Summary
-
-CleanCropper is a lightweight yet powerful tool for transforming annotated datasets into clean, structured image crops—ready for machine learning workflows.
-
----
+🧠 One-Line Summary
+CleanCropper turns messy annotated datasets into clean, structured, ML-ready object crops — with zero manual effort.
